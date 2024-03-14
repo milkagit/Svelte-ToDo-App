@@ -10,9 +10,6 @@
   let filter = "all";
   let errMsg = "";
 
-  // Use $todos to access the value of the todos store
-  $: $todos;
-
   onMount(async () => {
     // Fetch todos from the dummy API
     const response = await fetch("https://jsonplaceholder.typicode.com/todos");
@@ -77,7 +74,12 @@
   {#if errMsg}
     <p style="color: red;">{errMsg}</p>
   {/if}
-  <TodoList {$todos} {filter} {markComplete} {removeTask} />
+  <TodoList
+    todosList={$todos}
+    selectedFilter={filter}
+    {markComplete}
+    {removeTask}
+  />
   <Filters {filter} on:filterChange={handleFilterChange} />
 </div>
 

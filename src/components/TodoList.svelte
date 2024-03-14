@@ -1,38 +1,50 @@
 <!-- TodoList.svelte -->
 <script lang="ts">
-  import { onMount, onDestroy } from "svelte";
+  import ColorPicker from "./ColorPicker.svelte";
   import TodoItem from "./TodoItem.svelte";
+  import { onMount, onDestroy } from "svelte";
   import { todos } from "../stores/todos.js";
+  import { filter } from "../stores/filter";
 
-  export let filter: string;
+  export let todosList: any;
+  export let selectedFilter: any;
   export let markComplete: any;
   export let removeTask: any;
 
   let fetchedTodos: any[] = [];
   let filteredTodos: string | any[] = [];
 
-  // export let selectedColor = "#ffffff"; //default
+  let selectedColors: string[] = [];
 
-  const unsubscribe = todos.subscribe((value) => {
+  function handleColorChange(event: { detail: string }, index: number) {
+    selectedColors[index] = event.detail;
+  }
+
+  const unsubscribeTodos = todos.subscribe((value) => {
     fetchedTodos = value;
     updatedFilters();
   });
 
+  const unsubscribeFilter = filter.subscribe(() => {
+    updatedFilters();
+  });
+
   onMount(() => {
-    console.log("Fetched todos in TodoList", fetchedTodos);
     updatedFilters();
   });
 
   onDestroy(() => {
-    unsubscribe();
+    unsubscribeTodos();
+    unsubscribeFilter();
   });
 
   function updatedFilters() {
-    if (filter === "completed") {
+    const currentFilter = $filter;
+    if (currentFilter === "completed") {
       filteredTodos = fetchedTodos.filter(
         (todo) => todo.status === "completed"
       );
-    } else if (filter === "incomplete") {
+    } else if (currentFilter === "incomplete") {
       filteredTodos = fetchedTodos.filter((todo) => todo.status === "pending");
     } else {
       filteredTodos = fetchedTodos;
@@ -43,7 +55,20 @@
 <div class="tasks">
   {#if Array.isArray(filteredTodos) && filteredTodos.length > 0}
     {#each filteredTodos as todo, i}
-      <TodoItem {todo} {i} {filter} {markComplete} {removeTask} />
+      <div class="task">
+        <ColorPicker
+          on:colorChange={(event) => handleColorChange(event, i)}
+          bind:selectedColor={selectedColors[i]}
+        />
+        <TodoItem
+          {todo}
+          {i}
+          filter={$filter}
+          {markComplete}
+          {removeTask}
+          selectedColor={selectedColors[i]}
+        />
+      </div>
     {/each}
   {:else}
     <p>No todos available.</p>
@@ -56,5 +81,11 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+  }
+
+  .task {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
   }
 </style>

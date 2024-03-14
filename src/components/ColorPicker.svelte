@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { tick, onMount } from "svelte";
+  import { createEventDispatcher, tick } from "svelte";
 
   // Initial value
   export let id = Math.random();
   export let value = "#5E7ABC";
   let myIndex = 0;
   let myRow = 0;
+
+  export let selectedColor = "#5E7ABC"; // initial value
 
   // Our color set
   let values = [
@@ -87,8 +89,14 @@
     }
   }
 
+  // function changeValue(innerValue: string) {
+  //   value = innerValue;
+  //   ddActive = false;
+  // }
+  const dispatch = createEventDispatcher();
   function changeValue(innerValue: string) {
-    value = innerValue;
+    selectedColor = innerValue;
+    dispatch("colorChange", selectedColor); // Emit a custom event
     ddActive = false;
   }
 
@@ -238,7 +246,6 @@
   }
 
   .fake-focus,
-  input:focus,
   button:focus {
     outline: 0;
     box-shadow: 0 0 0 2px #18a0fb;

@@ -8,19 +8,18 @@
   export let markComplete: (arg0: any) => any;
   export let removeTask: (arg0: any) => any;
 
-  // export let selectedColor: string; // Default color
-  export let selectedColor = "#ffffff"; //default
+  export let selectedColor: string; // Add selectedColor as a prop
 
-  function handleColorChange(event: CustomEvent<any>) {
-    const color = event.detail.toString();
-    selectedColor = color;
-    console.log("color", event.detail);
-  }
+  // function handleColorChange(event: CustomEvent<any>) {
+  //   const color = event.detail.toString();
+  //   selectedColor = color;
+  //   console.log("color", event.detail);
+  // }
 </script>
 
-{#if filter == "all" || (filter == "completed" && todo.status == "completed") || (filter == "incomplete" && todo.status == "pending")}
+{#if filter == "all" || (filter === "completed" && todo.status === "completed") || (filter === "incomplete" && todo.status == "pending")}
   <div class="task" style="background-color: {selectedColor}">
-    <ColorPicker on:colorChange={handleColorChange} />
+    <!-- <ColorPicker on:colorChange={handleColorChange} /> -->
     <div style="background-color: {selectedColor}">{todo.task}</div>
     <div class="task-btn">
       <input
