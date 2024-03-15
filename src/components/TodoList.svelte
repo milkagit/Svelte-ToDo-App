@@ -38,13 +38,24 @@
     unsubscribeFilter();
   });
 
+  // function updatedFilters() {
+  //   const selectedFilter = $filter;
+  //   if (selectedFilter === "completed") {
+  //     filteredTodos = fetchedTodos.filter(
+  //       (todo) => todo.status === "completed"
+  //     );
+  //   } else if (selectedFilter === "incomplete") {
+  //     filteredTodos = fetchedTodos.filter((todo) => todo.status === "pending");
+  //   } else {
+  //     filteredTodos = fetchedTodos;
+  //   }
+  // }
   function updatedFilters() {
-    const currentFilter = $filter;
-    if (currentFilter === "completed") {
+    if (selectedFilter === "completed") {
       filteredTodos = fetchedTodos.filter(
         (todo) => todo.status === "completed"
       );
-    } else if (currentFilter === "incomplete") {
+    } else if (selectedFilter === "uncompleted") {
       filteredTodos = fetchedTodos.filter((todo) => todo.status === "pending");
     } else {
       filteredTodos = fetchedTodos;
@@ -63,7 +74,7 @@
         <TodoItem
           {todo}
           {i}
-          filter={$filter}
+          filter={selectedFilter}
           {markComplete}
           {removeTask}
           selectedColor={selectedColors[i]}

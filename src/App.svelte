@@ -36,8 +36,6 @@
     ]);
     task = "";
     errMsg = "";
-
-    // console.log("Updated todos after adding a new task:", $todos);
   }
 
   function markComplete(i: number) {

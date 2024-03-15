@@ -5,7 +5,7 @@
   const dispatch = createEventDispatcher();
 
   function handleFilterClick(selectedFilter: string) {
-    dispatch("filterChange", { detail: selectedFilter });
+    dispatch("filterChange", selectedFilter);
     console.log("selectedFilter", selectedFilter);
   }
   // function handleFilterClick(selectedFilter: string) {
