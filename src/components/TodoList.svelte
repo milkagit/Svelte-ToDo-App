@@ -55,7 +55,7 @@
       filteredTodos = fetchedTodos.filter(
         (todo) => todo.status === "completed"
       );
-    } else if (selectedFilter === "uncompleted") {
+    } else if (selectedFilter === "incomplete") {
       filteredTodos = fetchedTodos.filter((todo) => todo.status === "pending");
     } else {
       filteredTodos = fetchedTodos;
@@ -67,10 +67,12 @@
   {#if Array.isArray(filteredTodos) && filteredTodos.length > 0}
     {#each filteredTodos as todo, i}
       <div class="task">
-        <ColorPicker
-          on:colorChange={(event) => handleColorChange(event, i)}
-          bind:selectedColor={selectedColors[i]}
-        />
+        {#if selectedFilter === "all" || !selectedFilter || (selectedFilter === "completed" && todo.status === "completed") || (selectedFilter === "incomplete" && todo.status === "pending")}
+          <ColorPicker
+            on:colorChange={(event) => handleColorChange(event, i)}
+            bind:selectedColor={selectedColors[i]}
+          />
+        {/if}
         <TodoItem
           {todo}
           {i}

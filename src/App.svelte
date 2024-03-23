@@ -68,10 +68,10 @@
 <div class="container">
   <button on:click={refreshData}>Refresh Data</button>
 
-  <TodoForm bind:task {addTask} />
-  {#if errMsg}
+  <TodoForm bind:task {addTask} {errMsg} />
+  <!-- {#if errMsg}
     <p style="color: red;">{errMsg}</p>
-  {/if}
+  {/if} -->
   <TodoList
     todosList={$todos}
     selectedFilter={filter}

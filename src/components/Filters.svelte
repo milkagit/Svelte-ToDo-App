@@ -1,6 +1,8 @@
 <!-- Filters.svelte -->
 <script lang="ts">
+  import Button from "@smui/button";
   import { createEventDispatcher } from "svelte";
+
   export let filter: string;
   const dispatch = createEventDispatcher();
 
@@ -8,31 +10,28 @@
     dispatch("filterChange", selectedFilter);
     console.log("selectedFilter", selectedFilter);
   }
-  // function handleFilterClick(selectedFilter: string) {
-  //   dispatch("filterChange", selectedFilter);
-  //   console.log("selectedFilter", { filter: selectedFilter });
-  // }
 </script>
 
 <div class="filters">
-  <button
+  <!-- <Button>test</Button> -->
+  <Button
     class={filter === "all" ? "active" : ""}
     on:click={() => handleFilterClick("all")}
   >
     All
-  </button>
-  <button
+  </Button>
+  <Button
     class={filter === "completed" ? "active" : ""}
     on:click={() => handleFilterClick("completed")}
   >
     Completed
-  </button>
-  <button
+  </Button>
+  <Button
     class={filter === "incomplete" ? "active" : ""}
     on:click={() => handleFilterClick("incomplete")}
   >
     Incomplete
-  </button>
+  </Button>
 </div>
 
 <style>
@@ -41,7 +40,7 @@
     justify-content: space-between;
   }
 
-  .filters > button {
+  /* .filters > button {
     padding: 10px 8px;
     border: 1px solid #1e85eb;
     color: #1e85eb;
@@ -52,5 +51,5 @@
   .filters > button.active {
     background: #1e85eb;
     color: #f5f5f5;
-  }
+  } */
 </style>
